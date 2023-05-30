@@ -1,4 +1,4 @@
-{-# LANGUAGE DataKinds           #-}
+{-# LANGUAGE DataKinds           #-}--extensions that are neccessary
 {-# LANGUAGE ImportQualifiedPost #-}
 {-# LANGUAGE NoImplicitPrelude   #-}
 {-# LANGUAGE TemplateHaskell     #-}
@@ -15,7 +15,7 @@ import           Utilities            (writeValidatorToFile)
 
 -- This validator always succeeds
 --                    Datum         Redeemer     ScriptContext
-mkGiftValidator :: BuiltinData -> BuiltinData -> BuiltinData -> ()
+mkGiftValidator :: BuiltinData -> BuiltinData -> BuiltinData -> ()--validator
 mkGiftValidator _ _ _ = ()
 {-# INLINABLE mkGiftValidator #-}
 
@@ -25,5 +25,6 @@ validator = PlutusV2.mkValidatorScript $$(PlutusTx.compile [|| mkGiftValidator |
 ---------------------------------------------------------------------------------------------------
 ------------------------------------- HELPER FUNCTIONS --------------------------------------------
 
-saveVal :: IO ()
+saveVal :: IO ()--templete haskell
 saveVal = writeValidatorToFile "./assets/gift.plutus" validator
+
