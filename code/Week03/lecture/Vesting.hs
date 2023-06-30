@@ -18,7 +18,7 @@ import           Prelude                   (IO, String)
 import           Utilities                 (Network, posixTimeFromIso8601,
                                             printDataToJSON,
                                             validatorAddressBech32,
-                                            wrapValidator, writeValidatorToFile)
+                                            wrapValidator,writeValidatorToFile)
 
 ---------------------------------------------------------------------------------------------------
 ----------------------------------- ON-CHAIN / VALIDATOR ------------------------------------------
