@@ -88,5 +88,5 @@ async function claimVestedFunds(): Promise<TxHash> {
     else return "No UTxO's found that can be claimed"
 }
 
-//console.log(await vestFunds(100000000n));
-//console.log(await claimVestedFunds());
+console.log(await vestFunds(100000000n));
+console.log(await claimVestedFunds());
