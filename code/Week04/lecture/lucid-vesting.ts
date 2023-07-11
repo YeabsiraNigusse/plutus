@@ -19,7 +19,7 @@ const lucid = await Lucid.new(
     "https://cardano-preview.blockfrost.io/api/v0",
     "previewRPhikzGxsRPLAQxHlw7dLeObVD2GDtnn"
   ),
-  "Preprod"
+  "Preview"
 );
 
 // load local stored seed as a wallet into lucid
@@ -48,7 +48,7 @@ const deadlinePosIx = BigInt(deadlineDate.getTime());
 // Set the vesting beneficiary to our own key.
 const details: AddressDetails = getAddressDetails(addr);
 const beneficiaryPKH: string = details.paymentCredential.hash
-
+console.log(beneficiaryPKH);
 // Creating a datum with a beneficiary and deadline
 const datum: VestingDatum = {
     beneficiary: beneficiaryPKH,
