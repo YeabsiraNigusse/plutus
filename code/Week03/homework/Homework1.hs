@@ -12,6 +12,7 @@ import           Plutus.V2.Ledger.Api (BuiltinData, POSIXTime, PubKeyHash,
                                        ScriptContext (scriptContextTxInfo), Validator,
                                        TxInfo (txInfoValidRange),
                                        mkValidatorScript,from,to)
+import           Prelude                   (IO, String)
 import           PlutusTx             (compile, unstableMakeIsData)
 import           PlutusTx.Prelude     (Bool (..),traceIfFalse, ($), (&&), (||), (+))
 import           Plutus.V2.Ledger.Contexts (txSignedBy)
@@ -60,3 +61,7 @@ mkWrappedVestingValidator = wrapValidator mkVestingValidator
 
 validator :: Validator
 validator = mkValidatorScript $$(compile [|| mkWrappedVestingValidator ||])
+
+
+saveVal :: IO ()
+saveVal = writeValidatorToFile "./assets/homework1.plutus" validator
