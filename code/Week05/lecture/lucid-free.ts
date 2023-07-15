@@ -8,7 +8,9 @@ import {
     fromText,
     Data
 } from "https://deno.land/x/lucid@0.9.1/mod.ts"
-import { blockfrostKey, secretSeed } from "./secret.ts"
+
+import { secretSeed } from "../../Week04/lecture/seed.ts"
+
 
 function readAmount(): bigint {
     const input = prompt("amount: ");
@@ -23,11 +25,11 @@ const freePolicy: MintingPolicy = {
 // set blockfrost endpoint
 const lucid = await Lucid.new(
     new Blockfrost(
-        "https://cardano-preprod.blockfrost.io/api/v0",
-        blockfrostKey
+      "https://cardano-preview.blockfrost.io/api/v0",
+      "previewRPhikzGxsRPLAQxHlw7dLeObVD2GDtnn"
     ),
-    "Preprod"
-);
+    "Preview"
+  );
 
 // load local stored seed as a wallet into lucid
 lucid.selectWalletFromSeed(secretSeed);

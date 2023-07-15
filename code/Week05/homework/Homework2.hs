@@ -5,18 +5,33 @@
 
 module Homework2 where
 
+import           Plutus.V1.Ledger.Value     (flattenValue)
 import           Plutus.V2.Ledger.Api (BuiltinData, MintingPolicy,
-                                       ScriptContext, TokenName, TxOutRef,
-                                       mkMintingPolicyScript)
+                                       ScriptContext (scriptContextTxInfo), TokenName (TokenName), TxOutRef,
+                                       mkMintingPolicyScript,TxInfo (txInfoInputs,txInfoMint),TxInInfo (txInInfoOutRef),)
 import qualified PlutusTx
-import           PlutusTx.Prelude     (Bool (False), ($), (.))
+import           PlutusTx.Prelude     (Bool (False), ($), (.), any, Eq ((==)))
 import           Utilities            (wrapPolicy)
+import           PlutusTx.Prelude     (Bool, traceIfFalse, ($), (.), (&&))
 
 {-# INLINABLE mkEmptyNFTPolicy #-}
 -- Minting policy for an NFT, where the minting transaction must consume the given UTxO as input
 -- and where the TokenName will be the empty ByteString.
+
 mkEmptyNFTPolicy :: TxOutRef -> () -> ScriptContext -> Bool
-mkEmptyNFTPolicy _oref () _ctx = False -- FIX ME!
+mkEmptyNFTPolicy _oref () _ctx = traceIfFalse "UTxO not consumed"   hasUTxO           &&
+                                 traceIfFalse "wrong amount minted" checkMintedAmount
+  where
+    info :: TxInfo
+    info = scriptContextTxInfo _ctx
+
+    hasUTxO :: Bool
+    hasUTxO = any (\i -> txInInfoOutRef i == _oref) $ txInfoInputs info
+
+    checkMintedAmount :: Bool
+    checkMintedAmount = case flattenValue (txInfoMint info) of
+        [(_, tn'', amt)] -> tn'' == (TokenName "") && amt == 1 -- TokenName ""
+        _                -> False
 
 {-# INLINABLE mkWrappedEmptyNFTPolicy #-}
 mkWrappedEmptyNFTPolicy :: TxOutRef -> BuiltinData -> BuiltinData -> ()
