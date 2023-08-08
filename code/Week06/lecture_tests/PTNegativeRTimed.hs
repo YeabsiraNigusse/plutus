@@ -3,6 +3,7 @@
 {-# LANGUAGE NoImplicitPrelude  #-}
 {-# LANGUAGE NumericUnderscores #-}
 {-# OPTIONS_GHC -Wno-orphans #-}
+{-# LANGUAGE InstanceSigs #-}
 
 module Main where
 
@@ -47,6 +48,7 @@ main = defaultMain $ do
 
 -- | Make Run an instance of Testable so we can use it with QuickCheck
 instance Testable a => Testable (Run a) where
+  property :: Testable a => Run a -> Property
   property rp = let (a,_) = runMock rp $ initMock defaultBabbage (adaValue 10_000_000) in property a
 
 -- Make POSIXTime an instance of Arbitrary so QuickCheck can generate random values to test
