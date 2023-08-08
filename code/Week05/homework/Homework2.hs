@@ -10,9 +10,9 @@ import           Plutus.V2.Ledger.Api (BuiltinData, MintingPolicy,
                                        ScriptContext (scriptContextTxInfo), TokenName (TokenName), TxOutRef,
                                        mkMintingPolicyScript,TxInfo (txInfoInputs,txInfoMint),TxInInfo (txInInfoOutRef),)
 import qualified PlutusTx
-import           PlutusTx.Prelude     (Bool (False), ($), (.), any, Eq ((==)))
+import           PlutusTx.Prelude     (Bool (False), ($), (.), any, Eq ((==)),traceIfFalse, (&&))
 import           Utilities            (wrapPolicy)
-import           PlutusTx.Prelude     (Bool, traceIfFalse, ($), (.), (&&))
+  
 
 {-# INLINABLE mkEmptyNFTPolicy #-}
 -- Minting policy for an NFT, where the minting transaction must consume the given UTxO as input
